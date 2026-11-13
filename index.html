@@ -1,0 +1,644 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Kost Dago DT 20</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400..800&display=swap">
+<style>
+/* Layout: kepala bersih, hero dua kolom (teks + ringkasan tipe kamar dengan denah), lalu kisi pilihan nomor kamar. Satu lantai, satu tipe kamar. */
+:root {
+  --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bg: #f6f8f9; --surface: #ffffff; --soft: #eaf3f2; --ink: #13202a; --muted: #5a6877; --line: #dde4e9;
+  --brand: #0d6b6e; --brand-ink: #ffffff; --brand-soft: #e1f0ef;
+  --ok-bg: #dff3e8; --ok: #13683d; --warn-bg: #fdefd0; --warn: #8a5300; --bad-bg: #fbe1dc; --bad: #a3271a; --off-bg: #e9edf1; --off: #55616f;
+  --shadow: 0 1px 2px rgba(19,32,42,.05), 0 6px 18px rgba(19,32,42,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0e1417; --surface: #151d21; --soft: #1a2a2d; --ink: #e8eef1; --muted: #98a8b4; --line: #26343b;
+    --brand: #4fbdb8; --brand-ink: #062022; --brand-soft: #173234;
+    --ok-bg: #143a28; --ok: #7fdfa9; --warn-bg: #3f3009; --warn: #f1c978; --bad-bg: #471f19; --bad: #ff9f92; --off-bg: #232f37; --off: #a6b4c0;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0e1417; --surface: #151d21; --soft: #1a2a2d; --ink: #e8eef1; --muted: #98a8b4; --line: #26343b;
+  --brand: #4fbdb8; --brand-ink: #062022; --brand-soft: #173234;
+  --ok-bg: #143a28; --ok: #7fdfa9; --warn-bg: #3f3009; --warn: #f1c978; --bad-bg: #471f19; --bad: #ff9f92; --off-bg: #232f37; --off: #a6b4c0;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.25);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); font-size: 15px; line-height: 1.6; }
+h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; text-wrap: balance; margin: 0; line-height: 1.2; }
+p { margin: 0; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--brand); font-weight: 600; }
+:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 0 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.num { font-variant-numeric: tabular-nums; }
+
+/* kepala */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 16px; letter-spacing: -0.01em; }
+.brand svg { width: 30px; height: 30px; flex: none; }
+.tabs { display: flex; gap: 22px; flex-wrap: wrap; }
+.tabs a { text-decoration: none; color: var(--muted); padding: 6px 0; border-bottom: 2px solid transparent; font-weight: 600; font-size: 14px; white-space: nowrap; display: inline-flex; gap: 6px; align-items: center; }
+.tabs a:hover { color: var(--ink); }
+.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--brand); font-weight: 700; }
+.count { background: var(--brand); color: var(--brand-ink); border-radius: 999px; font-size: 11.5px; padding: 0 7px; font-weight: 700; }
+
+/* hero */
+.hero { padding-block: 44px 20px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
+.eyebrow { color: var(--brand); font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+.hero h1 { margin-top: 10px; font-size: clamp(30px, 4.6vw, 46px); font-weight: 800; }
+.hero .lead { margin-top: 16px; max-width: 48ch; font-size: 16px; color: var(--muted); }
+.cta-row { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+.facts { margin: 28px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0; border-top: 1px solid var(--line); max-width: 520px; }
+.facts div { padding: 14px 16px 0 0; }
+.facts dt { color: var(--muted); font-size: 12.5px; font-weight: 600; }
+.facts dd { margin: 2px 0 0; font-weight: 800; font-size: 17px; }
+.note-s { margin-top: 20px; color: var(--muted); font-size: 13px; max-width: 52ch; }
+
+/* ringkasan tipe kamar */
+.spec { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; box-shadow: var(--shadow); overflow: hidden; min-width: 0; }
+.spec .plan { background: var(--soft); padding: 22px 20px 14px; display: flex; justify-content: center; }
+.spec .plan svg { width: 100%; max-width: 280px; height: auto; display: block; }
+.spec .plan-cap { text-align: center; font-size: 12.5px; color: var(--muted); background: var(--soft); padding: 0 16px 14px; }
+.spec .sbody { padding: 18px 20px 20px; display: grid; gap: 14px; }
+.spec h2 { font-size: 18px; }
+.spec .price { font-size: 24px; font-weight: 800; }
+.spec .price small { font-size: 13px; font-weight: 600; color: var(--muted); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { background: var(--brand-soft); color: var(--ink); border-radius: 999px; padding: 3px 11px; font-size: 13px; font-weight: 600; }
+
+/* pilih kamar */
+.sec { margin-top: 48px; }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 12px 20px; flex-wrap: wrap; }
+.sec h2 { font-size: clamp(21px, 3vw, 26px); }
+.sec .sub { color: var(--muted); margin-top: 4px; font-size: 14.5px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; font-weight: 600; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.grid { margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 14px; }
+.tile { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 14px; min-width: 0; }
+.tile.tersedia { box-shadow: var(--shadow); }
+.tile .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.tile h3 { font-size: 17px; }
+.tile .pr { color: var(--muted); font-size: 14px; }
+.tile .pr b { color: var(--ink); }
+.tile:not(.tersedia) h3, .tile:not(.tersedia) .pr, .tile:not(.tersedia) .pr b { color: var(--muted); }
+.pill { display: inline-block; border-radius: 999px; padding: 2px 10px; font-size: 12px; font-weight: 700; white-space: nowrap; }
+.pill.tersedia, .pill.dikonfirmasi { background: var(--ok-bg); color: var(--ok); }
+.pill.dipesan, .pill.menunggu { background: var(--warn-bg); color: var(--warn); }
+.pill.ditolak { background: var(--bad-bg); color: var(--bad); }
+.pill.terisi, .pill.dibatalkan { background: var(--off-bg); color: var(--off); }
+.btn { border: 1px solid var(--brand); border-radius: 10px; padding: 9px 18px; font-weight: 700; background: var(--brand); color: var(--brand-ink); transition: filter .12s; text-align: center; }
+.btn:hover { filter: brightness(1.1); }
+.btn[disabled] { background: var(--off-bg); color: var(--off); border-color: var(--off-bg); cursor: not-allowed; filter: none; }
+.btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn.ghost:hover { background: var(--soft); filter: none; }
+.btn.small { padding: 5px 12px; font-size: 13px; border-radius: 8px; }
+.btn.danger { background: var(--bad-bg); color: var(--bad); border-color: var(--bad-bg); }
+.btn.big { padding: 12px 24px; font-size: 15.5px; }
+.empty { margin-top: 18px; border: 1px dashed var(--line); border-radius: 14px; padding: 28px 18px; text-align: center; color: var(--muted); }
+
+/* denah */
+.fp-wall { fill: var(--surface); stroke: var(--ink); stroke-width: 2.5; }
+.fp-item { fill: var(--soft); stroke: var(--muted); stroke-width: 1.5; }
+.fp-win { stroke: var(--brand); stroke-width: 5; stroke-linecap: round; }
+.fp-door { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 3 3; }
+.fp-gap { fill: var(--surface); }
+.fp-t { fill: var(--muted); font: 600 10px var(--font); }
+
+/* info */
+.steps { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 14px; counter-reset: s; }
+.steps li { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px; counter-increment: s; display: grid; gap: 6px; align-content: start; }
+.steps li::before { content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: var(--brand-soft); color: var(--brand); display: grid; place-items: center; font-weight: 800; margin-bottom: 4px; }
+.steps b { font-size: 15.5px; }
+.steps span { color: var(--muted); font-size: 14px; }
+.rules { margin: 18px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 0 32px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 6px 20px; }
+.rules li { padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--muted); }
+.rules li b { color: var(--ink); }
+.foot-note { margin-top: 48px; display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 16px; }
+.foot-note b { color: var(--ink); }
+
+/* daftar booking */
+.view-title { margin-top: 36px; font-size: clamp(24px, 4vw, 32px); }
+.view-sub { color: var(--muted); margin-top: 8px; max-width: 60ch; }
+.list { margin-top: 18px; display: grid; gap: 12px; }
+.bk { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 16px; align-items: center; }
+.bk .main { min-width: 0; }
+.bk .code { font-weight: 800; font-size: 15px; overflow-wrap: anywhere; }
+.bk .meta { color: var(--muted); font-size: 14px; margin-top: 2px; overflow-wrap: anywhere; }
+.bk .act { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+.bk .warnline { grid-column: 1 / -1; font-size: 13px; color: var(--warn); background: var(--warn-bg); border-radius: 8px; padding: 6px 10px; font-weight: 600; }
+.stats { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 16px; min-width: 140px; }
+.stat b { font-size: 24px; display: block; line-height: 1.3; }
+.stat span { color: var(--muted); font-size: 13px; }
+.filters { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 5px 14px; font-weight: 600; font-size: 13.5px; }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.sel { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 10px; }
+.rs { margin-top: 32px; }
+.rs h2 { font-size: 19px; margin-bottom: 12px; }
+.rs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 10px; }
+.rs-item { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+
+/* lembar booking */
+.root-sheet[hidden] { display: none; }
+.scrim { position: fixed; inset: 0; background: rgba(8, 16, 20, .5); z-index: 20; }
+.sheet { position: fixed; z-index: 21; background: var(--surface); color: var(--ink); overflow-y: auto; box-shadow: var(--shadow);
+  right: 0; top: 0; bottom: 0; width: min(100%, 460px); padding: 24px 22px; padding-top: calc(24px + env(safe-area-inset-top, 0px)); padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); padding-right: max(22px, env(safe-area-inset-right, 0px)); }
+@media (max-width: 800px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-top: 32px; }
+}
+@media (max-width: 640px) {
+  .sheet { top: auto; left: 0; width: 100%; max-height: 92dvh; border-radius: 18px 18px 0 0; padding-left: max(18px, env(safe-area-inset-left, 0px)); padding-right: max(18px, env(safe-area-inset-right, 0px)); }
+  .bk { grid-template-columns: minmax(0, 1fr); }
+  .bk .act { justify-content: flex-start; }
+}
+.sheet h2 { font-size: 21px; padding-right: 44px; }
+.sheet .close { position: absolute; top: calc(18px + env(safe-area-inset-top, 0px)); right: max(18px, env(safe-area-inset-right, 0px)); width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface); font-size: 20px; line-height: 1; }
+.sheet .rm { color: var(--muted); margin-top: 4px; padding-right: 44px; }
+form { display: grid; gap: 14px; margin-top: 18px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field label, .field .lbl { font-weight: 700; font-size: 14px; }
+.field input[type="text"], .field input[type="tel"], .field input[type="date"], .field select, .field textarea { width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--bg); }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--brand); outline-offset: 0; border-color: var(--brand); }
+.field textarea { resize: vertical; min-height: 64px; }
+.field .err { font-size: 13px; color: var(--bad); font-weight: 600; }
+.field.bad input, .field.bad select { border-color: var(--bad); }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.dur { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.dur input { position: absolute; opacity: 0; pointer-events: none; }
+.dur label { border: 1px solid var(--line); border-radius: 10px; padding: 8px 4px; text-align: center; font-weight: 700; cursor: pointer; background: var(--bg); display: grid; }
+.dur label small { font-weight: 500; color: var(--muted); font-size: 11.5px; }
+.dur input:checked + label { background: var(--brand-soft); border-color: var(--brand); color: var(--ink); box-shadow: inset 0 0 0 1px var(--brand); }
+.dur input:focus-visible + label { outline: 3px solid var(--brand); outline-offset: 2px; }
+.sum { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.sum div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 14px; border-bottom: 1px solid var(--line); font-size: 14px; }
+.sum div:last-child { border-bottom: 0; background: var(--brand-soft); font-weight: 800; font-size: 15.5px; }
+.sum .m { color: var(--muted); font-weight: 500; }
+.sum div:last-child .m { color: var(--ink); font-weight: 700; }
+.note { font-size: 13px; color: var(--muted); }
+.formerr { background: var(--bad-bg); color: var(--bad); border-radius: 10px; padding: 10px 12px; font-weight: 600; font-size: 14px; }
+.ok-box { margin-top: 18px; display: grid; gap: 14px; }
+.codebox { border: 1px dashed var(--brand); background: var(--brand-soft); border-radius: 14px; padding: 16px; text-align: center; }
+.codebox .c { font-weight: 800; font-size: 26px; letter-spacing: .05em; user-select: all; overflow-wrap: anywhere; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(20px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 10px 16px; border-radius: 10px; font-weight: 600; z-index: 40; max-width: calc(100% - 32px); }
+.toast[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .sheet { animation: slide .2s ease-out; }
+  @keyframes slide { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+  .tile { transition: box-shadow .15s, border-color .15s; }
+  .tile.tersedia:hover { border-color: var(--brand); }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="var(--brand)"/><path d="M7 15 16 7l9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H8a1 1 0 0 1-1-1z" fill="var(--brand-ink)"/></svg>
+      <span id="brand-name">Kost Dago DT 20</span>
+    </div>
+    <nav class="tabs" aria-label="Menu utama">
+      <a href="#kamar" id="tab-kamar">Kamar</a>
+      <a href="#booking-saya" id="tab-saya">Booking saya <span class="count num" id="cnt-saya" hidden>0</span></a>
+      <a href="#pemilik" id="tab-pemilik" hidden>Panel pemilik <span class="count num" id="cnt-owner" hidden>0</span></a>
+    </nav>
+  </header>
+
+  <!-- KAMAR -->
+  <main id="view-kamar">
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Booking kamar online</span>
+        <h1 id="hero-name">Kost Dago DT 20</h1>
+        <p class="lead">Pilih nomor kamar yang masih kosong, isi data singkat, lalu kirim. Pemilik akan menghubungi Anda lewat WhatsApp untuk konfirmasi.</p>
+        <div class="cta-row"><button type="button" class="btn big" data-action="scroll-rooms">Pilih kamar</button></div>
+        <dl class="facts" id="facts"></dl>
+        <p class="note-s">Alamat lengkap, foto, dan rincian fasilitas menyusul. Ukuran, harga, dan fasilitas di halaman ini masih contoh.</p>
+      </div>
+      <aside class="spec" id="spec" aria-label="Ringkasan kamar"></aside>
+    </section>
+
+    <section class="sec" id="rooms-top">
+      <div class="sec-head">
+        <div><h2>Pilih kamar</h2><p class="sub" id="rooms-sub"></p></div>
+        <div class="legend"><span><i style="background:var(--ok)"></i>Kosong</span><span><i style="background:var(--warn)"></i>Dipesan</span><span><i style="background:var(--off)"></i>Terisi</span></div>
+      </div>
+      <div class="grid" id="rooms"></div>
+    </section>
+
+    <section class="sec">
+      <h2>Alur booking</h2>
+      <ol class="steps">
+        <li><b>Kirim permintaan</b><span>Pilih nomor kamar, isi nama, nomor WhatsApp, tanggal masuk, dan lama sewa.</span></li>
+        <li><b>Pemilik mengonfirmasi</b><span>Status berubah di halaman Booking saya. Pemilik juga menghubungi lewat WhatsApp.</span></li>
+        <li><b>Bayar dan pindahan</b><span>Bayar deposit dan sewa pertama sesuai arahan pemilik, lalu ambil kunci di tanggal masuk.</span></li>
+      </ol>
+    </section>
+
+    <section class="sec">
+      <h2>Aturan singkat</h2>
+      <ul class="rules">
+        <li><b>Penghuni:</b> maksimal 2 orang per kamar.</li>
+        <li><b>Tamu:</b> boleh berkunjung sampai pukul 21.00, tidak menginap.</li>
+        <li><b>Biaya bulanan:</b> sudah termasuk air, WiFi, dan kebersihan area bersama.</li>
+        <li><b>Deposit:</b> dikembalikan saat keluar jika kamar dalam kondisi baik.</li>
+      </ul>
+    </section>
+    <div class="foot-note"><b id="foot-name">Kost Dago DT 20</b><span>Aturan, harga, dan fasilitas di atas masih contoh.</span></div>
+  </main>
+
+  <!-- BOOKING SAYA -->
+  <main id="view-saya" hidden>
+    <h1 class="view-title">Booking saya</h1>
+    <p class="view-sub" id="saya-sub">Permintaan booking yang Anda kirim dari perangkat ini muncul di sini, lengkap dengan statusnya.</p>
+    <div class="list" id="list-saya"></div>
+  </main>
+
+  <!-- PANEL PEMILIK -->
+  <main id="view-pemilik" hidden>
+    <h1 class="view-title">Panel pemilik</h1>
+    <p class="view-sub">Permintaan booking dari semua pengunjung. Konfirmasi akan menandai kamar sebagai dipesan.</p>
+    <div class="stats" id="owner-stats"></div>
+    <div class="filters"><div class="chips" id="owner-chips" role="group" aria-label="Filter status"></div></div>
+    <div class="list" id="list-owner"></div>
+    <section class="rs">
+      <h2>Status kamar</h2>
+      <div class="rs-grid" id="rs-grid"></div>
+    </section>
+  </main>
+</div>
+
+<div class="root-sheet" id="sheet-root" hidden>
+  <div class="scrim" data-action="close-sheet"></div>
+  <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title"></section>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+/* ===== Pengaturan: ubah sesuai kos Anda ===== */
+const CONFIG = {
+  nama: "Kost Dago DT 20",
+  whatsapp: "",            // contoh: "6281234567890". Kosongkan jika tidak dipakai.
+  deposit: 500000,
+  diskon: { 6: 0.05, 12: 0.10 },
+  durasi: [1, 3, 6, 12]
+};
+/* Semua kamar sama (satu lantai). Ubah angka di bawah sesuai kondisi sebenarnya. */
+const SPEC = { w: 3, h: 4, harga: 1200000, bath: true, fas: ["Kasur", "Lemari", "Meja belajar", "Kamar mandi dalam", "WiFi"] };
+const NOMOR = [
+  ["1", "terisi"], ["2", "terisi"], ["3", "tersedia"], ["4", "dipesan"],
+  ["5", "tersedia"], ["6", "tersedia"], ["7", "terisi"], ["8", "tersedia"]
+];
+const ROOMS = NOMOR.map(([id, status]) => ({ ...SPEC, id, nama: "Kamar " + id, status }));
+const STATUS_LABEL = { tersedia: "Kosong", dipesan: "Dipesan", terisi: "Terisi", menunggu: "Menunggu konfirmasi", dikonfirmasi: "Dikonfirmasi", ditolak: "Ditolak", dibatalkan: "Dibatalkan" };
+
+/* ===== Util ===== */
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const rp = n => "Rp " + new Intl.NumberFormat("id-ID").format(n);
+const pad = n => String(n).padStart(2, "0");
+const isoDate = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const parseISO = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+const fmtDate = s => parseISO(s).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
+const addMonths = (s, n) => { const d = parseISO(s); const day = d.getDate(); d.setMonth(d.getMonth() + n); if (d.getDate() !== day) d.setDate(0); return isoDate(d); };
+const roomById = id => ROOMS.find(r => r.id === id);
+function genCode() {
+  const a = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; const b = new Uint32Array(5); crypto.getRandomValues(b);
+  return "KOS-" + Array.from(b, x => a[x % a.length]).join("");
+}
+function normPhone(v) {
+  let d = String(v).replace(/[^\d+]/g, "").replace(/^\+/, "");
+  if (d.startsWith("0")) d = "62" + d.slice(1);
+  return /^62\d{8,12}$/.test(d) ? d : null;
+}
+function calc(room, months) {
+  const sewa = room.harga * months, diskon = Math.round(sewa * (CONFIG.diskon[months] || 0));
+  return { sewa, diskon, deposit: CONFIG.deposit, total: sewa - diskon + CONFIG.deposit };
+}
+let toastTimer;
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 3200); }
+
+/* ===== State ===== */
+let db = null, uid = null, isAdmin = false;
+let roomStatus = {};            // dari db: id -> status
+let mine = [], allBookings = [];
+let ownerFilter = "semua";
+const LKEY = "kos-teduh-booking-lokal";
+const sharedMode = () => !!(db && uid);
+function loadLocal() { try { return JSON.parse(localStorage.getItem(LKEY) || "[]"); } catch (e) { return []; } }
+function saveLocal(arr) { try { localStorage.setItem(LKEY, JSON.stringify(arr)); } catch (e) { /* tanpa penyimpanan lokal */ } }
+const statusOf = id => roomStatus[id] || (roomById(id) || {}).status || "tersedia";
+
+/* ===== Denah kamar (skala 1 m = 24 px) ===== */
+function plan(r) {
+  const S = 24, ox = 26, oy = 22, W = r.w * S, H = r.h * S;
+  const vw = ox + W + 38, vh = oy + H + 10;
+  let s = `<svg viewBox="0 0 ${vw} ${vh}" role="img" aria-label="Denah kamar, ${r.w} kali ${r.h} meter">`;
+  s += `<rect class="fp-wall" x="${ox}" y="${oy}" width="${W}" height="${H}"/>`;
+  s += `<line class="fp-win" x1="${ox + W - 1.7 * S}" y1="${oy}" x2="${ox + W - 0.4 * S}" y2="${oy}"/>`;
+  const bw = 1.4 * S, bh = 2 * S;
+  s += `<rect class="fp-item" x="${ox + 5}" y="${oy + 5}" width="${bw}" height="${bh}" rx="3"/>`;
+  s += `<text class="fp-t" x="${ox + 5 + bw / 2}" y="${oy + 5 + bh / 2 + 3}" text-anchor="middle">Kasur</text>`;
+  if (r.bath) {
+    const kw = 1.3 * S, kh = 1.6 * S;
+    s += `<rect class="fp-item" x="${ox + W - kw}" y="${oy + H - kh}" width="${kw}" height="${kh}"/>`;
+    s += `<text class="fp-t" x="${ox + W - kw / 2}" y="${oy + H - kh / 2 + 3}" text-anchor="middle">KM</text>`;
+  }
+  const d = 0.8 * S, x0 = ox + W / 2 - d / 2;
+  s += `<rect class="fp-gap" x="${x0}" y="${oy + H - 2}" width="${d}" height="4"/>`;
+  s += `<path class="fp-door" d="M ${x0} ${oy + H} L ${x0} ${oy + H - d} A ${d} ${d} 0 0 1 ${x0 + d} ${oy + H}"/>`;
+  s += `<text class="fp-t" x="${ox + W / 2}" y="${oy - 8}" text-anchor="middle">${r.w} m</text>`;
+  s += `<text class="fp-t" x="${ox + W + 8}" y="${oy + H / 2 + 3}">${r.h} m</text>`;
+  return s + "</svg>";
+}
+
+/* ===== Halaman kamar ===== */
+function renderSpec() {
+  $("#spec").innerHTML =
+    `<div class="plan">${plan(SPEC)}</div><p class="plan-cap">Denah kamar (contoh). Semua kamar berukuran sama.</p>` +
+    `<div class="sbody"><h2>Kamar ${SPEC.w} × ${SPEC.h} m (${SPEC.w * SPEC.h} m²)</h2>` +
+    `<div class="price num">${rp(SPEC.harga)} <small>/ bulan</small></div>` +
+    `<div class="tags">${SPEC.fas.map(f => `<span class="tag">${esc(f)}</span>`).join("")}</div></div>`;
+}
+function renderFacts() {
+  const avail = ROOMS.filter(r => statusOf(r.id) === "tersedia").length;
+  const dsk = Object.keys(CONFIG.diskon).map(m => `${m} bln ${Math.round(CONFIG.diskon[m] * 100)}%`).join(", ");
+  $("#facts").innerHTML =
+    `<div><dt>Kamar kosong</dt><dd class="num">${avail} dari ${ROOMS.length}</dd></div>` +
+    `<div><dt>Harga sewa</dt><dd class="num">${rp(SPEC.harga)}</dd></div>` +
+    `<div><dt>Deposit</dt><dd class="num">${rp(CONFIG.deposit)}</dd></div>` +
+    (dsk ? `<div><dt>Diskon sewa panjang</dt><dd>${esc(dsk)}</dd></div>` : "");
+}
+function tile(r) {
+  const st = r.status, ok = st === "tersedia";
+  return `<article class="tile ${st}">
+    <div class="row"><h3>${esc(r.nama)}</h3><span class="pill ${st}">${STATUS_LABEL[st]}</span></div>
+    <p class="pr"><b class="num">${rp(r.harga)}</b> / bulan</p>
+    <button type="button" class="btn" data-action="book" data-room="${esc(r.id)}" ${ok ? "" : "disabled"}>${ok ? "Booking kamar" : (st === "dipesan" ? "Sudah dipesan" : "Terisi")}</button>
+  </article>`;
+}
+function renderRooms() {
+  const list = ROOMS.map(r => ({ ...r, status: statusOf(r.id) }));
+  const n = list.filter(r => r.status === "tersedia").length;
+  $("#rooms-sub").textContent = n ? `${n} dari ${list.length} kamar masih kosong.` : "Semua kamar sedang penuh. Cek lagi nanti.";
+  $("#rooms").innerHTML = list.map(tile).join("");
+}
+
+/* ===== Lembar booking ===== */
+let sheetRoom = null, lastFocus = null;
+function openSheet(id) {
+  const r = roomById(id); if (!r) return;
+  if (statusOf(id) !== "tersedia") { toast("Kamar ini sudah tidak tersedia."); return; }
+  sheetRoom = r; lastFocus = document.activeElement;
+  renderForm(); $("#sheet-root").hidden = false;
+  setTimeout(() => { const f = $("#f-nama"); if (f) f.focus(); }, 40);
+}
+function closeSheet() { $("#sheet-root").hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+function renderForm() {
+  const r = sheetRoom, now = new Date(), min = isoDate(now);
+  const def = new Date(now); def.setDate(def.getDate() + 3);
+  $("#sheet").innerHTML = `
+    <button type="button" class="close" data-action="close-sheet" aria-label="Tutup">×</button>
+    <h2 id="sheet-title">Booking ${esc(r.nama)}</h2>
+    <p class="rm">${r.w * r.h} m² · ${rp(r.harga)} / bulan</p>
+    <form id="bform" novalidate>
+      <div class="field" id="g-nama"><label for="f-nama">Nama lengkap</label><input type="text" id="f-nama" autocomplete="name" maxlength="60"><span class="err" id="e-nama"></span></div>
+      <div class="field" id="g-wa"><label for="f-wa">Nomor WhatsApp</label><input type="tel" id="f-wa" inputmode="tel" autocomplete="tel" placeholder="0812 3456 7890" maxlength="20"><span class="err" id="e-wa"></span></div>
+      <div class="two">
+        <div class="field" id="g-masuk"><label for="f-masuk">Tanggal masuk</label><input type="date" id="f-masuk" min="${min}" value="${isoDate(def)}"><span class="err" id="e-masuk"></span></div>
+        <div class="field"><label for="f-pen">Jumlah penghuni</label><select id="f-pen"><option value="1">1 orang</option><option value="2">2 orang</option></select></div>
+      </div>
+      <div class="field"><span class="lbl" id="l-dur">Lama sewa</span>
+        <div class="dur" role="radiogroup" aria-labelledby="l-dur">${CONFIG.durasi.map((m, i) => `<input type="radio" name="durasi" id="d${m}" value="${m}" ${i === 0 ? "checked" : ""}><label for="d${m}">${m} bln<small>${CONFIG.diskon[m] ? "hemat " + Math.round(CONFIG.diskon[m] * 100) + "%" : "&nbsp;"}</small></label>`).join("")}</div>
+      </div>
+      <div class="field"><label for="f-cat">Catatan untuk pemilik (opsional)</label><textarea id="f-cat" maxlength="240" placeholder="Misalnya jam kedatangan atau barang yang dibawa"></textarea></div>
+      <div class="sum num" id="sum"></div>
+      ${sharedMode() ? "" : `<p class="note">Penyimpanan bersama tidak aktif untuk akun ini. Booking hanya tersimpan di perangkat ini dan belum diterima pemilik, jadi hubungi pemilik langsung setelahnya.</p>`}
+      <div class="formerr" id="formerr" hidden></div>
+      <button type="submit" class="btn big" id="submit-btn">Kirim permintaan booking</button>
+      <p class="note">Belum ada pembayaran di langkah ini. Pemilik menghubungi Anda lewat WhatsApp untuk konfirmasi dan cara bayar.</p>
+    </form>`;
+  const f = $("#bform");
+  f.addEventListener("submit", onSubmit);
+  f.addEventListener("input", updateSum);
+  f.addEventListener("change", updateSum);
+  updateSum();
+}
+function readForm() {
+  const dur = document.querySelector('input[name="durasi"]:checked');
+  return { nama: $("#f-nama").value.trim(), wa: normPhone($("#f-wa").value), waRaw: $("#f-wa").value, masuk: $("#f-masuk").value, penghuni: +$("#f-pen").value, durasi: dur ? +dur.value : 1, catatan: $("#f-cat").value.trim() };
+}
+function updateSum() {
+  const v = readForm(), c = calc(sheetRoom, v.durasi);
+  const sampai = v.masuk ? fmtDate(addMonths(v.masuk, v.durasi)) : "-";
+  $("#sum").innerHTML =
+    `<div><span class="m">Sewa ${v.durasi} bulan × ${rp(sheetRoom.harga)}</span><span>${rp(c.sewa)}</span></div>` +
+    (c.diskon ? `<div><span class="m">Diskon sewa ${v.durasi} bulan</span><span>− ${rp(c.diskon)}</span></div>` : "") +
+    `<div><span class="m">Deposit (kembali saat keluar)</span><span>${rp(c.deposit)}</span></div>` +
+    `<div><span class="m">Masa sewa sampai</span><span>${esc(sampai)}</span></div>` +
+    `<div><span>Total bayar di awal</span><span>${rp(c.total)}</span></div>`;
+}
+function setErr(k, msg) {
+  const g = $("#g-" + k), e = $("#e-" + k); if (!g) return;
+  e.textContent = msg || ""; g.classList.toggle("bad", !!msg);
+}
+function validate(v) {
+  const today = isoDate(new Date()); let ok = true, first = null;
+  const fail = (k, m, id) => { setErr(k, m); ok = false; if (!first) first = id; };
+  setErr("nama", ""); setErr("wa", ""); setErr("masuk", "");
+  if (v.nama.length < 3) fail("nama", "Tulis nama lengkap Anda.", "f-nama");
+  if (!v.wa) fail("wa", "Nomor WhatsApp belum benar. Contoh: 0812 3456 7890.", "f-wa");
+  if (!v.masuk || v.masuk < today) fail("masuk", "Pilih tanggal hari ini atau setelahnya.", "f-masuk");
+  if (first) $("#" + first).focus();
+  return ok;
+}
+function formErr(msg) { const e = $("#formerr"); e.textContent = msg; e.hidden = !msg; }
+async function saveBooking(b) {
+  if (sharedMode()) {
+    const ref = db.doc("bookings/" + uid), snap = await ref.get();
+    if (snap.exists) await ref.update({ items: { [b.code]: b } }); else await ref.set({ items: { [b.code]: b } });
+  } else { mine = [b, ...mine]; saveLocal(mine); renderMine(); }
+}
+async function onSubmit(e) {
+  e.preventDefault(); formErr("");
+  const v = readForm(); if (!validate(v)) return;
+  if (statusOf(sheetRoom.id) !== "tersedia") { formErr("Kamar ini baru saja dipesan orang lain. Tutup lembar ini dan pilih kamar lain."); return; }
+  const c = calc(sheetRoom, v.durasi);
+  const b = { code: genCode(), roomId: sheetRoom.id, roomName: sheetRoom.nama, nama: v.nama, wa: v.wa, masuk: v.masuk, durasi: v.durasi, penghuni: v.penghuni, catatan: v.catatan, total: c.total, status: "menunggu", dibuat: Date.now() };
+  const btn = $("#submit-btn"); btn.disabled = true; btn.textContent = "Mengirim…";
+  try { await saveBooking(b); renderDone(b); }
+  catch (err) { btn.disabled = false; btn.textContent = "Kirim permintaan booking"; formErr("Permintaan belum terkirim karena akses halaman ini terbatas. Silakan hubungi pemilik kos langsung."); }
+}
+function renderDone(b) {
+  const shared = sharedMode();
+  const wa = CONFIG.whatsapp ? `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(`Halo, saya ${b.nama}. Saya mengirim booking ${b.roomName} dengan kode ${b.code}, masuk ${fmtDate(b.masuk)}.`)}` : "";
+  $("#sheet").innerHTML = `
+    <button type="button" class="close" data-action="close-sheet" aria-label="Tutup">×</button>
+    <h2 id="sheet-title">${shared ? "Permintaan terkirim" : "Tersimpan di perangkat ini"}</h2>
+    <div class="ok-box">
+      <div class="codebox"><div class="note">Kode booking</div><div class="c">${esc(b.code)}</div></div>
+      <div class="sum num">
+        <div><span class="m">Kamar</span><span>${esc(b.roomName)}</span></div>
+        <div><span class="m">Masuk</span><span>${esc(fmtDate(b.masuk))}</span></div>
+        <div><span class="m">Lama sewa</span><span>${b.durasi} bulan</span></div>
+        <div><span>Total bayar di awal</span><span>${rp(b.total)}</span></div>
+      </div>
+      <p>${shared ? "Pemilik akan menghubungi Anda lewat WhatsApp di nomor +" + esc(b.wa) + ". Status terbaru bisa dilihat di halaman Booking saya." : "Booking ini belum diterima pemilik. Hubungi pemilik langsung dan sebutkan kode di atas."}</p>
+      ${wa ? `<a class="btn" style="text-decoration:none;color:var(--brand-ink)" href="${wa}" target="_blank" rel="noopener">Chat pemilik di WhatsApp</a>` : ""}
+      <button type="button" class="btn ghost" data-action="copy" data-v="${esc(b.code)}">Salin kode</button>
+      <a class="btn ghost" style="text-decoration:none;color:var(--ink)" href="#booking-saya" data-action="close-sheet">Lihat booking saya</a>
+    </div>`;
+}
+
+/* ===== Booking saya ===== */
+const bkMeta = b => `${esc(b.roomName)} · masuk ${esc(fmtDate(b.masuk))} · ${b.durasi} bulan · ${rp(b.total)}`;
+function renderMine() {
+  const list = [...mine].sort((a, b) => (b.dibuat || 0) - (a.dibuat || 0));
+  $("#saya-sub").textContent = sharedMode()
+    ? "Permintaan booking yang Anda kirim muncul di sini, lengkap dengan statusnya."
+    : "Booking di sini hanya tersimpan di perangkat ini dan belum diterima pemilik. Hubungi pemilik langsung untuk memastikannya.";
+  $("#list-saya").innerHTML = list.length ? list.map(b => `<div class="bk">
+      <div class="main"><div class="code">${esc(b.code)}</div><div class="meta">${bkMeta(b)}</div></div>
+      <div class="act"><span class="pill ${esc(b.status)}">${STATUS_LABEL[b.status] || esc(b.status)}</span>${b.status === "menunggu" ? `<button type="button" class="btn ghost small" data-action="cancel" data-code="${esc(b.code)}">Batalkan</button>` : ""}</div>
+    </div>`).join("") : `<div class="empty">Belum ada booking. Pilih kamar di halaman <a href="#kamar">Kamar</a> untuk mulai.</div>`;
+  const n = mine.filter(b => b.status === "menunggu").length, c = $("#cnt-saya");
+  c.textContent = n; c.hidden = !n;
+}
+async function cancelMine(code) {
+  try {
+    if (sharedMode()) await db.doc("bookings/" + uid).update({ items: { [code]: { status: "dibatalkan" } } });
+    else { mine = mine.map(b => b.code === code ? { ...b, status: "dibatalkan" } : b); saveLocal(mine); renderMine(); }
+    toast("Booking dibatalkan.");
+  } catch (e) { toast("Belum bisa membatalkan. Coba lagi."); }
+}
+
+/* ===== Panel pemilik ===== */
+function renderOwner() {
+  if (!(isAdmin && db)) return;
+  const n = s => allBookings.filter(b => b.status === s).length;
+  const avail = ROOMS.filter(r => statusOf(r.id) === "tersedia").length;
+  $("#owner-stats").innerHTML =
+    `<div class="stat"><b class="num">${n("menunggu")}</b><span>Menunggu konfirmasi</span></div>` +
+    `<div class="stat"><b class="num">${n("dikonfirmasi")}</b><span>Dikonfirmasi</span></div>` +
+    `<div class="stat"><b class="num">${allBookings.length}</b><span>Semua permintaan</span></div>` +
+    `<div class="stat"><b class="num">${avail}/${ROOMS.length}</b><span>Kamar kosong</span></div>`;
+  const fl = ["semua", "menunggu", "dikonfirmasi", "ditolak", "dibatalkan"];
+  $("#owner-chips").innerHTML = fl.map(f => `<button type="button" class="chip" data-action="ofilter" data-v="${f}" aria-pressed="${ownerFilter === f}">${f === "semua" ? "Semua" : STATUS_LABEL[f].replace(" konfirmasi", "")}</button>`).join("");
+  let list = allBookings.filter(b => ownerFilter === "semua" || b.status === ownerFilter).sort((a, b) => (b.dibuat || 0) - (a.dibuat || 0));
+  $("#list-owner").innerHTML = list.length ? list.map(b => {
+    const clash = b.status === "menunggu" && statusOf(b.roomId) !== "tersedia";
+    return `<div class="bk">
+      <div class="main">
+        <div class="code">${esc(b.code)} · ${esc(b.nama)}</div>
+        <div class="meta">${bkMeta(b)} · ${b.penghuni || 1} penghuni</div>
+        <div class="meta">WhatsApp +${esc(b.wa)} · <a href="https://wa.me/${esc(b.wa)}" target="_blank" rel="noopener">Buka chat</a></div>
+        ${b.catatan ? `<div class="meta">Catatan: ${esc(b.catatan)}</div>` : ""}
+      </div>
+      <div class="act"><span class="pill ${esc(b.status)}">${STATUS_LABEL[b.status] || esc(b.status)}</span>
+        ${b.status === "menunggu" ? `<button type="button" class="btn small" data-action="ok" data-uid="${esc(b._uid)}" data-code="${esc(b.code)}" data-room="${esc(b.roomId)}">Konfirmasi</button><button type="button" class="btn ghost small" data-action="no" data-uid="${esc(b._uid)}" data-code="${esc(b.code)}">Tolak</button>` : ""}
+        <button type="button" class="btn danger small" data-action="del" data-uid="${esc(b._uid)}" data-code="${esc(b.code)}">Hapus</button>
+      </div>
+      ${clash ? `<div class="warnline">${esc(b.roomName)} saat ini berstatus ${esc(STATUS_LABEL[statusOf(b.roomId)].toLowerCase())}. Periksa sebelum mengonfirmasi.</div>` : ""}
+    </div>`;
+  }).join("") : `<div class="empty">Belum ada permintaan booking di kategori ini.</div>`;
+  $("#rs-grid").innerHTML = ROOMS.map(r => `<div class="rs-item"><b>${esc(r.nama)}</b><select class="sel" data-rs="${esc(r.id)}" aria-label="Status ${esc(r.nama)}">${["tersedia", "dipesan", "terisi"].map(s => `<option value="${s}" ${statusOf(r.id) === s ? "selected" : ""}>${STATUS_LABEL[s]}</option>`).join("")}</select></div>`).join("");
+  const c = $("#cnt-owner"), m = n("menunggu"); c.textContent = m; c.hidden = !m;
+}
+async function setBk(u, code, roomId, status) {
+  try {
+    await db.doc("bookings/" + u).update({ items: { [code]: { status } } });
+    if (status === "dikonfirmasi") await db.doc("roomStatus/" + roomId).set({ status: "dipesan" });
+    toast(status === "dikonfirmasi" ? "Booking dikonfirmasi, kamar ditandai dipesan." : "Booking ditolak.");
+  } catch (e) { toast("Belum bisa menyimpan. Coba lagi."); }
+}
+async function delBk(u, code) {
+  try {
+    const ref = db.doc("bookings/" + u), snap = await ref.get(), d = snap.data() || {}, items = { ...(d.items || {}) };
+    delete items[code]; await ref.set({ ...d, items }); toast("Booking dihapus.");
+  } catch (e) { toast("Belum bisa menghapus. Coba lagi."); }
+}
+async function setRoom(id, status) {
+  try { await db.doc("roomStatus/" + id).set({ status }); toast(`Kamar ${id} ditandai ${STATUS_LABEL[status].toLowerCase()}.`); }
+  catch (e) { toast("Belum bisa menyimpan status kamar."); }
+}
+
+/* ===== Navigasi dan event ===== */
+function route() {
+  let h = (location.hash || "#kamar").slice(1);
+  if (!["kamar", "booking-saya", "pemilik"].includes(h)) h = "kamar";
+  if (h === "pemilik" && !(isAdmin && db)) h = "kamar";
+  $("#view-kamar").hidden = h !== "kamar";
+  $("#view-saya").hidden = h !== "booking-saya";
+  $("#view-pemilik").hidden = h !== "pemilik";
+  [["kamar", "#tab-kamar"], ["booking-saya", "#tab-saya"], ["pemilik", "#tab-pemilik"]].forEach(([k, s]) => {
+    const a = $(s); if (k === h) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+  });
+}
+window.addEventListener("hashchange", route);
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#sheet-root").hidden) closeSheet(); });
+document.addEventListener("click", e => {
+  const t = e.target.closest("[data-action]"); if (!t) return;
+  const a = t.dataset.action;
+  if (a === "book") openSheet(t.dataset.room);
+  else if (a === "close-sheet") closeSheet();
+  else if (a === "scroll-rooms") { const el = $("#rooms-top"); if (el) el.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" }); }
+  else if (a === "ofilter") { ownerFilter = t.dataset.v; renderOwner(); }
+  else if (a === "cancel") cancelMine(t.dataset.code);
+  else if (a === "ok") setBk(t.dataset.uid, t.dataset.code, t.dataset.room, "dikonfirmasi");
+  else if (a === "no") setBk(t.dataset.uid, t.dataset.code, "", "ditolak");
+  else if (a === "del") {
+    if (t.dataset.armed) delBk(t.dataset.uid, t.dataset.code);
+    else { t.dataset.armed = "1"; t.textContent = "Yakin hapus?"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Hapus"; } }, 3000); }
+  } else if (a === "copy") {
+    const v = t.dataset.v;
+    (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast("Kode disalin.")).catch(() => toast("Tekan lama pada kode untuk menyalin."));
+  }
+});
+document.addEventListener("change", e => {
+  if (e.target.matches && e.target.matches("[data-rs]")) setRoom(e.target.dataset.rs, e.target.value);
+});
+
+/* ===== Mulai ===== */
+$("#brand-name").textContent = CONFIG.nama;
+$("#foot-name").textContent = CONFIG.nama;
+$("#hero-name").textContent = CONFIG.nama;
+mine = loadLocal();
+renderSpec(); renderFacts(); renderRooms(); renderMine(); route();
+
+(async function initShared() {
+  try { const user = await window.claude?.use?.("user"); if (user) { uid = await user.id(); isAdmin = !!(await user.canEdit()); } } catch (e) { /* tanpa identitas */ }
+  try { db = (await window.claude?.use?.("db")) || null; } catch (e) { db = null; }
+  if (!db) { renderMine(); return; }
+  const noop = () => {};
+  db.collection("roomStatus").onSnapshot(snap => {
+    roomStatus = {};
+    snap.docs.forEach(d => { const s = (d.data() || {}).status; if (s) roomStatus[d.id] = s; });
+    renderRooms(); renderFacts(); renderOwner();
+  }, noop);
+  if (uid) {
+    mine = [];
+    db.doc("bookings/" + uid).onSnapshot(snap => { mine = snap.exists ? Object.values((snap.data() || {}).items || {}) : []; renderMine(); }, noop);
+  }
+  if (isAdmin) {
+    $("#tab-pemilik").hidden = false;
+    db.collection("bookings").onSnapshot(snap => {
+      allBookings = [];
+      snap.docs.forEach(d => Object.values((d.data() || {}).items || {}).forEach(b => allBookings.push({ ...b, _uid: d.id })));
+      renderOwner();
+    }, noop);
+    renderOwner();
+  }
+  renderMine(); route();
+})();
+</script>
+
+</body></html>
